@@ -1,7 +1,5 @@
-using Platformer.Gameplay;
-using UnityEngine;
-using static Platformer.Core.Simulation;
 
+using UnityEngine;
 
 namespace Platformer.Mechanics
 {
@@ -13,29 +11,45 @@ namespace Platformer.Mechanics
     [RequireComponent(typeof(Collider2D))]
     public class TokenInstance : MonoBehaviour
     {
+        [Tooltip("The audio when the object is picked up")]
         public AudioClip tokenCollectAudio;
         [Tooltip("If true, animation will start at a random position in the sequence.")]
         public bool randomAnimationStartTime = false;
         [Tooltip("List of frames that make up the animation.")]
         public Sprite[] idleAnimation, collectedAnimation;
+        [Tooltip("Frames per second at which tokens are animated.")]
+        public float frameRate = 12;
+
 
         internal Sprite[] sprites = new Sprite[0];
-
         internal SpriteRenderer _renderer;
-
-        //unique index which is assigned by the TokenController in a scene.
-        internal int tokenIndex = -1;
-        internal TokenController controller;
-        //active frame in animation, updated by the controller.
         internal int frame = 0;
         internal bool collected = false;
 
+        float nextFrameTime = 0;
         void Awake()
         {
             _renderer = GetComponent<SpriteRenderer>();
             if (randomAnimationStartTime)
                 frame = Random.Range(0, sprites.Length);
             sprites = idleAnimation;
+        }
+
+        private void Update()
+        {
+            if (Time.time - nextFrameTime > (1f / frameRate))
+            {
+                _renderer.sprite = sprites[frame];
+                if (collected && frame == sprites.Length - 1)
+                {
+                    gameObject.SetActive(false);
+                }
+                else
+                {
+                    frame = (frame + 1) % sprites.Length;
+                }
+                nextFrameTime += 1f / frameRate;
+            }
         }
 
         void OnTriggerEnter2D(Collider2D other)
@@ -51,12 +65,8 @@ namespace Platformer.Mechanics
             //disable the gameObject and remove it from the controller update list.
             frame = 0;
             sprites = collectedAnimation;
-            if (controller != null)
-                collected = true;
-            //send an event into the gameplay system to perform some behaviour.
-            var ev = Schedule<PlayerTokenCollision>();
-            ev.token = this;
-            ev.player = player;
+            collected = true;
+            AudioSource.PlayClipAtPoint(tokenCollectAudio, transform.position);
         }
     }
 }

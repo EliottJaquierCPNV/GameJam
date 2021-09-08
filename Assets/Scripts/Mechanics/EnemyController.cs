@@ -1,9 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Platformer.Gameplay;
 using UnityEngine;
-using static Platformer.Core.Simulation;
-
 namespace Platformer.Mechanics
 {
     /// <summary>
@@ -36,9 +33,7 @@ namespace Platformer.Mechanics
             var player = collision.gameObject.GetComponent<PlayerController>();
             if (player != null)
             {
-                var ev = Schedule<PlayerEnemyCollision>();
-                ev.player = player;
-                ev.enemy = this;
+                GameController.PlayerEnemyCollision(this);
             }
         }
 
@@ -49,6 +44,8 @@ namespace Platformer.Mechanics
                 if (mover == null) mover = path.CreateMover(control.maxSpeed * 0.5f);
                 control.move.x = Mathf.Clamp(mover.Position.x - transform.position.x, -1, 1);
             }
+            if (transform.position.y < -100)
+                Destroy(gameObject);
         }
 
     }

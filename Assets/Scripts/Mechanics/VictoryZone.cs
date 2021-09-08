@@ -1,7 +1,5 @@
-using Platformer.Gameplay;
-using UnityEngine;
-using static Platformer.Core.Simulation;
 
+using UnityEngine;
 namespace Platformer.Mechanics
 {
     /// <summary>
@@ -14,8 +12,7 @@ namespace Platformer.Mechanics
             var p = collider.gameObject.GetComponent<PlayerController>();
             if (p != null)
             {
-                var ev = Schedule<PlayerEnteredVictoryZone>();
-                ev.victoryZone = this;
+                GameController.Victory();
             }
         }
     }

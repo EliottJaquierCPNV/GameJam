@@ -1,7 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Platformer.Core;
-using Platformer.Model;
 using UnityEngine;
 
 namespace Platformer.Mechanics
@@ -36,9 +34,19 @@ namespace Platformer.Mechanics
         /// </summary>
         public bool stopJump;
 
+        /// <summary>
+        /// A global jump modifier applied to all initial jump velocities.
+        /// </summary>
+        public float jumpModifier = 1.5f;
+
+        /// <summary>
+        /// A global jump modifier applied to slow down an active jump when 
+        /// the user releases the jump input.
+        /// </summary>
+        public float jumpDeceleration = 0.5f;
+
         SpriteRenderer spriteRenderer;
         Animator animator;
-        PlatformerModel model = Simulation.GetModel<PlatformerModel>();
 
         protected virtual void Awake()
         {
@@ -50,7 +58,7 @@ namespace Platformer.Mechanics
         {
             if (jump && IsGrounded)
             {
-                velocity.y = jumpTakeOffSpeed * model.jumpModifier;
+                velocity.y = jumpTakeOffSpeed * jumpModifier;
                 jump = false;
             }
             else if (stopJump)
@@ -58,7 +66,7 @@ namespace Platformer.Mechanics
                 stopJump = false;
                 if (velocity.y > 0)
                 {
-                    velocity.y = velocity.y * model.jumpDeceleration;
+                    velocity.y = velocity.y * jumpDeceleration;
                 }
             }
 
