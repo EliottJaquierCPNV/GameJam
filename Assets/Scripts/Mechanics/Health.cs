@@ -19,7 +19,7 @@ namespace Platformer.Mechanics
         /// Indicates if the entity should be considered 'alive'.
         /// </summary>
         public bool IsAlive => currentHP > 0;
-
+        [SerializeField]
         int currentHP;
 
         /// <summary>

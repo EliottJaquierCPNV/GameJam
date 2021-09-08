@@ -43,29 +43,32 @@ namespace Platformer.Mechanics
             //if it's time for the next frame...
             if (Time.time - nextFrameTime > (1f / frameRate))
             {
-                //update all tokens with the next animation frame.
-                for (var i = 0; i < tokens.Length; i++)
-                {
-                    var token = tokens[i];
-                    //if token is null, it has been disabled and is no longer animated.
-                    if (token != null)
-                    {
-                        token._renderer.sprite = token.sprites[token.frame];
-                        if (token.collected && token.frame == token.sprites.Length - 1)
-                        {
-                            token.gameObject.SetActive(false);
-                            tokens[i] = null;
-                        }
-                        else
-                        {
-                            token.frame = (token.frame + 1) % token.sprites.Length;
-                        }
-                    }
-                }
+                Tick();
                 //calculate the time of the next frame.
                 nextFrameTime += 1f / frameRate;
             }
         }
-
+        void Tick()
+        {
+            //update all tokens with the next animation frame.
+            for (var i = 0; i < tokens.Length; i++)
+            {
+                var token = tokens[i];
+                //if token is null, it has been disabled and is no longer animated.
+                if (token != null)
+                {
+                    token._renderer.sprite = token.sprites[token.frame];
+                    if (token.collected && token.frame == token.sprites.Length - 1)
+                    {
+                        token.gameObject.SetActive(false);
+                        tokens[i] = null;
+                    }
+                    else
+                    {
+                        token.frame = (token.frame + 1) % token.sprites.Length;
+                    }
+                }
+            }
+        }
     }
 }
