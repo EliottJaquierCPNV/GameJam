@@ -15,7 +15,7 @@ namespace Platformer.Mechanics
             var p = collider.gameObject.GetComponent<PlayerController>();
             if (p != null)
             {
-                GameController.PlayerDie();
+                p.Die();
             }
         }
     }

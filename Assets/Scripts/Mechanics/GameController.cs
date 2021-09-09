@@ -61,7 +61,7 @@ namespace Platformer.Mechanics
         }
         #endregion
         #region PlayerManagement
-        public static void PlayerDie()
+        public static void PlayerDie(PlayerController player)
         {
             if (Instance.player.isAlive)
             {
@@ -92,28 +92,6 @@ namespace Platformer.Mechanics
             Instance.virtualCamera.m_Follow = Instance.player.transform;
             Instance.virtualCamera.m_LookAt = Instance.player.transform;
             EnableInput(2f);
-        }
-        #endregion
-        #region EnemyManagement
-        public static void PlayerEnemyCollision(EnemyController enemy)
-        {
-            var willHurtEnemy = Instance.player.Bounds.center.y >= enemy.Bounds.max.y;
-
-            if (willHurtEnemy)
-            {
-                EnemyDie(enemy);
-            }
-            else
-            {
-                PlayerDie();
-            }
-        }
-        public static void EnemyDie(EnemyController enemy)
-        {
-            enemy._collider.enabled = false;
-            enemy.control.enabled = false;
-            if (enemy._audio && enemy.ouch)
-                enemy._audio.PlayOneShot(enemy.ouch);
         }
         #endregion
     }

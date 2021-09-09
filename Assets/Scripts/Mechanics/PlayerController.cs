@@ -80,7 +80,10 @@ namespace Platformer.Mechanics
             UpdateJumpState();
             base.Update();
         }
-
+        public void Die()
+        {
+            GameController.PlayerDie(this);
+        }
         void UpdateJumpState()
         {
             jump = false;

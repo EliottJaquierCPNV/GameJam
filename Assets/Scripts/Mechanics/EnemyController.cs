@@ -33,8 +33,28 @@ namespace Platformer.Mechanics
             var player = collision.gameObject.GetComponent<PlayerController>();
             if (player != null)
             {
-                GameController.PlayerEnemyCollision(this);
+                PlayerCollision(player);
             }
+        }
+        void PlayerCollision(PlayerController player)
+        {
+            var willHurtEnemy = player.Bounds.center.y >= Bounds.max.y;
+
+            if (willHurtEnemy)
+            {
+                Die();
+            }
+            else
+            {
+                player.Die();
+            }
+        }
+        void Die()
+        {
+            _collider.enabled = false;
+            control.enabled = false;
+            if (_audio && ouch)
+                _audio.PlayOneShot(ouch);
         }
 
         void Update()
