@@ -5,15 +5,11 @@ namespace Platformer.Mechanics
     /// <summary>
     /// Marks a trigger as a VictoryZone, usually used to end the current game level.
     /// </summary>
-    public class VictoryZone : MonoBehaviour
+    public class VictoryZone : Interactable
     {
-        void OnTriggerEnter2D(Collider2D collider)
+        protected override void OnPlayerInteract(PlayerController player)
         {
-            var p = collider.gameObject.GetComponent<PlayerController>();
-            if (p != null)
-            {
-                GameController.Victory();
-            }
+            GameController.Victory();
         }
     }
 }

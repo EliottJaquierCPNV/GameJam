@@ -1,6 +1,7 @@
 
 using UnityEngine;
 
+
 namespace Platformer.Mechanics
 {
     /// <summary>
@@ -9,7 +10,7 @@ namespace Platformer.Mechanics
     /// TokenController in the scene.
     /// </summary>
     [RequireComponent(typeof(Collider2D))]
-    public class TokenInstance : MonoBehaviour
+    public class TokenInstance : Interactable
     {
         [Tooltip("The audio when the object is picked up")]
         public AudioClip tokenCollectAudio;
@@ -20,13 +21,12 @@ namespace Platformer.Mechanics
         [Tooltip("Frames per second at which tokens are animated.")]
         public float frameRate = 12;
 
-
         internal Sprite[] sprites = new Sprite[0];
         internal SpriteRenderer _renderer;
         internal int frame = 0;
-        internal bool collected = false;
 
         float nextFrameTime = 0;
+
         void Awake()
         {
             _renderer = GetComponent<SpriteRenderer>();
@@ -34,13 +34,12 @@ namespace Platformer.Mechanics
                 frame = Random.Range(0, sprites.Length);
             sprites = idleAnimation;
         }
-
-        private void Update()
+        void Update()
         {
             if (Time.time - nextFrameTime > (1f / frameRate))
             {
                 _renderer.sprite = sprites[frame];
-                if (collected && frame == sprites.Length - 1)
+                if (hasAlreadyInteractedOneTime && frame == sprites.Length - 1)
                 {
                     gameObject.SetActive(false);
                 }
@@ -51,22 +50,13 @@ namespace Platformer.Mechanics
                 nextFrameTime += 1f / frameRate;
             }
         }
-
-        void OnTriggerEnter2D(Collider2D other)
+        protected override void OnPlayerInteract(PlayerController player)
         {
-            //only exectue OnPlayerEnter if the player collides with this token.
-            var player = other.gameObject.GetComponent<PlayerController>();
-            if (player != null) OnPlayerEnter(player);
-        }
-
-        void OnPlayerEnter(PlayerController player)
-        {
-            if (collected) return;
             //disable the gameObject and remove it from the controller update list.
             frame = 0;
             sprites = collectedAnimation;
-            collected = true;
             AudioSource.PlayClipAtPoint(tokenCollectAudio, transform.position);
         }
+
     }
 }
