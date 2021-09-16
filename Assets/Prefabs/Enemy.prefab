@@ -51,6 +51,8 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -62,6 +64,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -161,6 +164,8 @@ MonoBehaviour:
   move: {x: 0, y: 0}
   jump: 0
   stopJump: 0
+  jumpModifier: 1.5
+  jumpDeceleration: 0.5
 --- !u!114 &772289407653213039
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,6 +178,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd654acc1f7894a509f3420e5c9ffea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canInteractOnlyOneTime: 0
+  isTriggerSystem: 0
   path: {fileID: 0}
   ouch: {fileID: 8300000, guid: b7f741588644cd64bbee6387cb54a96d, type: 3}
 --- !u!82 &5843668731025413174
