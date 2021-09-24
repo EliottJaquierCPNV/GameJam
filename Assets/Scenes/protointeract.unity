@@ -605,7 +605,7 @@ Grid:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1049762107}
   m_Enabled: 1
-  m_CellSize: {x: 1, y: 1, z: 0}
+  m_CellSize: {x: 0.3, y: 0.3, z: 0}
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
@@ -1296,5 +1296,4 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 22.699982
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: e78c7a7dc672de14dbdba1fa1dd147e9, type: 3}
+
