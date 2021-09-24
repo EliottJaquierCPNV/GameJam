@@ -16,6 +16,7 @@ public class ItemSlot : MonoBehaviour
     void Start()
     {
         items = new Item[3];
+        UpdateSelected();
     }
     /// <summary>
     /// Add an item to the list
@@ -31,6 +32,25 @@ public class ItemSlot : MonoBehaviour
         }
         instance.Display();
         instance.UpdateSelected();
+    }
+    public static void DeleteItem(Item item)
+    {
+        int itemStack = -1;
+        int count = 0;
+        foreach (Item itemS in items)
+        {
+            if(itemS.name == item.name && itemS.type == item.type && itemS.id == item.id)
+            {
+                itemStack = count;
+            }
+            count = 0;
+        }
+        if (itemStack != -1)
+        {
+            items[lastPut] = new Item();
+            instance.Display();
+            instance.UpdateSelected();
+        }
     }
     public void Display()
     {
