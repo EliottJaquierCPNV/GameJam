@@ -45,4 +45,13 @@ public class PlayerMovement : MonoBehaviour
         Vector2 direction = new Vector2(x, y);
         transform.Translate(direction * Time.fixedDeltaTime * speed);
     }
+    /// <summary>
+    /// Téléporte le joueur aux coordonnées données.
+    /// </summary>
+    /// <param name="x">Position X ou l'on veut téléporter le personnage.</param>
+    /// <param name="y">Position Y ou l'on veut téléporter le personnage.</param>
+    public void Teleport(float x, float y)
+    {
+        transform.position = new Vector2(x, y);
+    }
 }
