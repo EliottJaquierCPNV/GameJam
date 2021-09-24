@@ -11,11 +11,17 @@ public class PlayerMovement : MonoBehaviour
     float y;
     Collider2D colliderInteraction = null;
     #endregion
-    
+    #region public variables
+    public Animator anim;
+    #endregion
+
     void Update()
     {
         x = Input.GetAxisRaw("Horizontal");
         y = Input.GetAxisRaw("Vertical");
+        anim.SetFloat("horizontalSpeed", x);
+        anim.SetFloat("verticalSpeed", y);
+
         if (colliderInteraction != null && Input.GetButtonDown("Interact"))
         {
             colliderInteraction.GetComponent<Interactable>().Interact();
