@@ -16,6 +16,29 @@ public class PlayerMovement : MonoBehaviour
         x = Input.GetAxisRaw("Horizontal");
         y = Input.GetAxisRaw("Vertical");
     }
+    #region Interact
+    void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.tag == "Interact" && Input.GetButtonDown("Interact"))
+        {
+            collision.GetComponent<Interactable>().Interact();
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Interact")
+        {
+            GameCanvasManager.InteractShow(true);
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.tag == "Interact")
+        {
+            GameCanvasManager.InteractShow(false);
+        }
+    }
+    #endregion
 
     private void FixedUpdate()
     {
