@@ -9,25 +9,24 @@ public class PlayerMovement : MonoBehaviour
     float speed = 5f;
     float x;
     float y;
+    Collider2D colliderInteraction = null;
     #endregion
     
     void Update()
     {
         x = Input.GetAxisRaw("Horizontal");
         y = Input.GetAxisRaw("Vertical");
-    }
-    #region Interact
-    void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.tag == "Interact" && Input.GetButtonDown("Interact"))
+        if (colliderInteraction != null && Input.GetButtonDown("Interact"))
         {
-            collision.GetComponent<Interactable>().Interact();
+            colliderInteraction.GetComponent<Interactable>().Interact();
         }
     }
+    #region Interact
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Interact")
         {
+            colliderInteraction = collision;
             GameCanvasManager.InteractShow(true);
         }
     }
@@ -35,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.tag == "Interact")
         {
+            colliderInteraction = null;
             GameCanvasManager.InteractShow(false);
         }
     }
