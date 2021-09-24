@@ -7,6 +7,8 @@ public class GameCanvasManager : MonoBehaviour
     private static GameCanvasManager instance;
     [SerializeField]
     private GameObject interact;
+    [SerializeField]
+    private keypad kpad;
     private void OnEnable()
     {
         instance = this;
@@ -22,5 +24,10 @@ public class GameCanvasManager : MonoBehaviour
     public static void InteractShow(bool showing)
     {
         instance.interact.SetActive(showing);
+    }
+
+    public static void KeyPadSetup(Door reference,string code)
+    {
+        instance.kpad.Setup(code, reference);
     }
 }

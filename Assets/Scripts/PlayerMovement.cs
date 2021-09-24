@@ -18,7 +18,9 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         x = Input.GetAxisRaw("Horizontal");
-        y = Input.GetAxisRaw("Vertical");
+        y = 0;
+        if (x == 0)
+            y = Input.GetAxisRaw("Vertical");
         anim.SetFloat("horizontalSpeed", x);
         anim.SetFloat("verticalSpeed", y);
 

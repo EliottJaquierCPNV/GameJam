@@ -8,10 +8,21 @@ public class keypad : MonoBehaviour
     #region local variables
     [SerializeField]
     string displayCode;
+    string validCode;
     public Text displayText;
-    public Canvas keyPad;
+    private Door reference;
     #endregion
-    
+    public void Setup(string code, Door doorRef)
+    {
+        reference = doorRef;
+        displayCode = "";
+        displayText.text = "";
+        gameObject.SetActive(true);
+    }
+    public void Close()
+    {
+        gameObject.SetActive(false);
+    }
     /// <summary>
     /// Ajouter le nouveau contenu sur la zone de texte du keypad
     /// </summary>
@@ -22,21 +33,16 @@ public class keypad : MonoBehaviour
         displayText.text = displayCode;
     }
 
-    public void ValidateCode(string validCode)
+    public void ValidateCode()
     {
         if(displayCode == validCode)
         {
-            Debug.Log("Code Valide");
+            Close();
         }
         else
         {
-            Debug.Log("Code Invalide");
+            displayCode = "";
+            displayText.text = "";
         }
-    }
-
-    
-    public void OpenCloseKeypad(bool open)
-    {
-        keyPad.GetComponent<Canvas>().enabled = open;
     }
 }

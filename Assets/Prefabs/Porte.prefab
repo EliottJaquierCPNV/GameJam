@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1995955186441753442}
   - component: {fileID: 1995955186441753441}
   - component: {fileID: 7214302020355225029}
+  - component: {fileID: 1036389604}
   m_Layer: 0
   m_Name: Porte
   m_TagString: Interact
@@ -101,10 +102,10 @@ MonoBehaviour:
   interact:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7214302020355225029}
-        m_TargetAssemblyTypeName: levelLoader, Assembly-CSharp
-        m_MethodName: loadLevel
-        m_Mode: 5
+      - m_Target: {fileID: 1036389604}
+        m_TargetAssemblyTypeName: Door, Assembly-CSharp
+        m_MethodName: Open
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -151,3 +152,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebd50e73b98243a43b4df9b8f83aa918, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1036389604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1995955186441753453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec5b913bd7089754e96053f7db75f5dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  actionWhenOpen:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7214302020355225029}
+        m_TargetAssemblyTypeName: levelLoader, Assembly-CSharp
+        m_MethodName: loadLevel
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

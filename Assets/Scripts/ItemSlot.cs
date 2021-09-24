@@ -47,10 +47,23 @@ public class ItemSlot : MonoBehaviour
         }
         if (itemStack != -1)
         {
-            items[lastPut] = new Item();
+            items[itemStack] = new Item();
             instance.Display();
             instance.UpdateSelected();
         }
+    }
+    public static bool hasKey(out Item it)
+    {
+        foreach (Item itemS in items)
+        {
+            if (itemS.type == Type.Key)
+            {
+                it = itemS;
+                return true;
+            }
+        }
+        it = new Item();
+        return false;
     }
     public void Display()
     {
