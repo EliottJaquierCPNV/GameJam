@@ -4,5 +4,38 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/intro.unity
+    guid: 21718d4667842334a8fff2d52eeae86b
+  - enabled: 1
+    path: Assets/Scenes/menu.unity
+    guid: 29677b6435e3e4448b32917d365c45b0
+  - enabled: 1
+    path: Assets/Scenes/core.unity
+    guid: 5489ef0f646540249b99f41bae6a68d1
+  - enabled: 1
+    path: Assets/Scenes/maps/city.unity
+    guid: cf0dbffa9d201344ea7271273f93d2a0
+  - enabled: 1
+    path: Assets/Scenes/maps/m1.unity
+    guid: a61e0b9eaab1c4c4b87827a3c0a3641e
+  - enabled: 1
+    path: Assets/Scenes/maps/m2.unity
+    guid: ac81d6f4967ae884eaa744eb57bf3438
+  - enabled: 1
+    path: Assets/Scenes/maps/m3.unity
+    guid: 9a91b286d3500744ab896ae397d61371
+  - enabled: 1
+    path: Assets/Scenes/maps/el1.unity
+    guid: 8750808534fd109439da6f488ee6f430
+  - enabled: 1
+    path: Assets/Scenes/maps/el2.unity
+    guid: 6c5896ea63ede51459c01a016f1f5496
+  - enabled: 1
+    path: Assets/Scenes/badend.unity
+    guid: c882d205779322f45ba8a9d18cb9c96c
+  - enabled: 1
+    path: Assets/Scenes/goodend.unity
+    guid: 8b5327654207748439461b5122b55a67
   m_configObjects: {}
