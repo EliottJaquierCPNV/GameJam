@@ -10,11 +10,26 @@ public class PlayerMovement : MonoBehaviour
     float x;
     float y;
     Collider2D colliderInteraction = null;
+    FMOD.Studio.EventInstance audFoot;
+    static PlayerMovement instance;
     #endregion
     #region public variables
     public Animator anim;
+    [FMODUnity.EventRef]
+    public string audFootSteps = "";
     #endregion
-
+    private void OnEnable()
+    {
+        instance = this;
+        audFoot = FMODUnity.RuntimeManager.CreateInstance(audFootSteps);
+        audFoot.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(transform.position));
+        audFoot.start();
+    }
+    private void OnDisable()
+    {
+        instance = null;
+        audFoot.release();
+    }
     void Update()
     {
         x = Input.GetAxisRaw("Horizontal");
@@ -52,14 +67,22 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector2 direction = new Vector2(x, y);
         transform.Translate(direction * Time.fixedDeltaTime * speed);
+        if(direction.x != 0 || direction.y != 0)
+        {
+            audFoot.setParameterByName("active", 1);
+        }
+        else
+        {
+            audFoot.setParameterByName("active", 0);
+        }
     }
     /// <summary>
     /// Téléporte le joueur aux coordonnées données.
     /// </summary>
     /// <param name="x">Position X ou l'on veut téléporter le personnage.</param>
     /// <param name="y">Position Y ou l'on veut téléporter le personnage.</param>
-    public void Teleport(float x, float y)
+    public static void Teleport(Vector2 position)
     {
-        transform.position = new Vector2(x, y);
+        instance.transform.position = position;
     }
 }

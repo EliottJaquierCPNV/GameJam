@@ -7,26 +7,39 @@ public class Door : MonoBehaviour
 {
     public DoorType type;
     public UnityEvent actionWhenOpen;
+    public string messageIfFail = "";
+    public string secretKeyName = "";
     public void Open()
     {
         switch (type)
         {
             case DoorType.Unlocked:
-                actionWhenOpen.Invoke();
+                OpenDirectely();
                 break;
             case DoorType.Key:
                 Item it;
-                if (ItemSlot.hasKey(out it))
+                if (ItemSlot.hasObject(secretKeyName,out it))
                 {
-                    ItemSlot.DeleteItem(it);
-                    actionWhenOpen.Invoke();
+                    ItemSlot.UseItem(it);
+                    OpenDirectely();
+                }
+                else
+                {
+                    GameCanvasManager.ShowInfo(messageIfFail);
                 }
                 break;
             case DoorType.KeyPad:
-                actionWhenOpen.Invoke();
+                GameCanvasManager.KeyPadSetup(this, secretKeyName);
+                break;
+            case DoorType.Locked:
+                GameCanvasManager.ShowInfo(messageIfFail);
                 break;
         }
         
+    }
+    public void OpenDirectely()
+    {
+        actionWhenOpen.Invoke();
     }
 }
 public enum DoorType

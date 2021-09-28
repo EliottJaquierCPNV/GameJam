@@ -4,45 +4,55 @@ using UnityEngine;
 
 public class CameraBehaviour : MonoBehaviour
 {
-    public Transform playerTransform;
-    public Vector3 offset;
-     Vector3 outOffset;
-    void Start()
+    public static CameraBehaviour instance;
+    public Animator anim;
+    private Vector3 anchorPosition;
+    private void OnEnable()
     {
-        outOffset = offset;
+        instance = this;
     }
-    
-    void Update()
+    private void OnDisable()
     {
-        CheckIfOnBorder();
+        instance = null;
     }
-
-    void CheckIfOnBorder()
+    public static void CamTeleport(Vector2 destination)
     {
-        if(playerTransform.position.x <= outOffset.x - 20)
+        if(instance != null)
         {
-            CamTeleport(new Vector3(-10, 0, 0));
-            outOffset.x -= 10;
-        }
-        if (playerTransform.position.x >= outOffset.x)
-        {
-            CamTeleport(new Vector3(+10, 0, 0));
-            outOffset.x += 10;
-        }
-        if (playerTransform.position.y <= outOffset.y - 20)
-        {
-            CamTeleport(new Vector3(0, -10, 0));
-            outOffset.y -= 10;
-        }
-        if (playerTransform.position.y >= outOffset.y)
-        {
-            CamTeleport(new Vector3(0, 10, 0));
-            outOffset.y += 10;
-        }
+            instance.anchorPosition = new Vector3(destination.x, destination.y, -10);
+            instance.transform.position = instance.anchorPosition;
+        } 
+    }
+    public static void CamInfos(float orthoSize)
+    {
+        if (instance != null)
+            instance.GetComponent<Camera>().orthographicSize = orthoSize;
+    }
+    public static void CamShake(float duration, float magnitude)
+    {
+        if (instance != null)
+            instance.StartCoroutine(instance.Shake(duration, magnitude));
+    }
+    public static void CamAnim(string trigger)
+    {
+        if (instance != null)
+            instance.anim.SetTrigger(trigger);
     }
 
-    void CamTeleport(Vector3 destination)
+    public IEnumerator Shake(float duration, float magnitude)
     {
-        transform.position += destination;
+        Vector3 orignalPosition = transform.position;
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            float x = Random.Range(-1f, 1f) * magnitude;
+            float y = Random.Range(-1f, 1f) * magnitude;
+
+            transform.position = instance.anchorPosition+new Vector3(x, y, 0);
+            elapsed += Time.deltaTime;
+            yield return 0;
+        }
+        transform.position = orignalPosition;
     }
 }

@@ -71,7 +71,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 10
   m_Sprite: {fileID: -9151110031310560701, guid: b66892201b61b53438d635fed38404da,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 975918516}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -149,8 +149,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96b2545238cc84a4ca719f4619ef46ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 3
   anim: {fileID: 280203742306201196}
+  audFootSteps: event:/footsteps
 --- !u!50 &973693867530893892
 Rigidbody2D:
   serializedVersion: 4
@@ -196,5 +197,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.9, y: 1.5}
+  m_Size: {x: 0.67, y: 1.3}
   m_EdgeRadius: 0

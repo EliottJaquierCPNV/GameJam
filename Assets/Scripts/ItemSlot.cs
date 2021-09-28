@@ -5,18 +5,16 @@ using UnityEngine.UI;
 
 public class ItemSlot : MonoBehaviour
 {
-    public static Item[] items;
-    public Image[] itemsS;
-    public Sprite[] sType;
-    public Image[] selectItems;
-    public Color[] cType;
-    private static int lastPut = 0;
+    public static List<Item> items;
+    public List<ItemUI> itemsUI;
+    public GameObject listUI;
+    public GameObject instanceUI;
+    public FMODUnity.StudioEventEmitter eventAud;
     private static ItemSlot instance;
     // Start is called before the first frame update
     void Start()
     {
-        items = new Item[3];
-        UpdateSelected();
+        items = new List<Item>(0);
     }
     /// <summary>
     /// Add an item to the list
@@ -24,39 +22,32 @@ public class ItemSlot : MonoBehaviour
     /// <param name="item"></param>
     public static void AddItem(Item item)
     {
-        items[lastPut] = item;
-        lastPut++;
-        if(lastPut > 2)
-        {
-            lastPut = 0;
-        }
+        instance.eventAud.Play();
+        items.Add(item);
         instance.Display();
-        instance.UpdateSelected();
     }
-    public static void DeleteItem(Item item)
+    public static void UseItem(Item item)
     {
-        int itemStack = -1;
         int count = 0;
-        foreach (Item itemS in items)
+        foreach (Item itemTest in items)
         {
-            if(itemS.name == item.name && itemS.type == item.type && itemS.id == item.id)
+            if(itemTest.name == item.name)
             {
-                itemStack = count;
+                Item it = items[count];
+                it.used = true;
+                items[count] = it;
+                instance.Display();
+                instance.eventAud.Play();
+                break;
             }
-            count = 0;
-        }
-        if (itemStack != -1)
-        {
-            items[itemStack] = new Item();
-            instance.Display();
-            instance.UpdateSelected();
+            count++;
         }
     }
-    public static bool hasKey(out Item it)
+    public static bool hasObject(string name,out Item it)
     {
         foreach (Item itemS in items)
         {
-            if (itemS.type == Type.Key)
+            if (itemS.name == name)
             {
                 it = itemS;
                 return true;
@@ -67,22 +58,33 @@ public class ItemSlot : MonoBehaviour
     }
     public void Display()
     {
+        foreach (ItemUI itUI in itemsUI)
+        {
+            GameObject.Destroy(itUI.gameObject);
+        }
+        itemsUI.Clear();
+
+        listUI.GetComponent<RectTransform>().sizeDelta = new Vector2(listUI.GetComponent<RectTransform>().sizeDelta.x, 30+(75*items.Count));
+
         int i = 0;
         foreach (var item in items)
         {
-            itemsS[i].sprite = sType[(int)item.type];
-            itemsS[i].color = cType[(int)item.type];
+            GameObject inst = Instantiate(instanceUI, listUI.transform) as GameObject;
+            inst.GetComponent<RectTransform>().anchoredPosition = new Vector2(0,(-42)-(75*i));
+            ItemUI itUI = inst.GetComponent<ItemUI>();
+            itUI.Setup(item);
+            itemsUI.Add(itUI);
             i++;
         }
     }
-    public void UpdateSelected()
+    /*public void UpdateSelected()
     {
         foreach (var itemI in selectItems)
         {
             itemI.color = Color.white;
         }
         instance.selectItems[lastPut].color = Color.red;
-    }
+    }*/
     private void OnEnable()
     {
         instance = this;
@@ -96,11 +98,7 @@ public class ItemSlot : MonoBehaviour
 public struct Item
 {
     public string name;
-    public Type type;
-    public int id;
-}
-public enum Type
-{
-    None,
-    Key
+    public Sprite image;
+    public bool used;
+    public string commonName;
 }

@@ -11,6 +11,8 @@ public class keypad : MonoBehaviour
     string validCode;
     public Text displayText;
     private Door reference;
+    public FMODUnity.StudioEventEmitter tr;
+    public FMODUnity.StudioEventEmitter fl;
     #endregion
     public void Setup(string code, Door doorRef)
     {
@@ -18,10 +20,12 @@ public class keypad : MonoBehaviour
         displayCode = "";
         displayText.text = "";
         gameObject.SetActive(true);
+        validCode = code;
     }
     public void Close()
     {
         gameObject.SetActive(false);
+        reference = null;
     }
     /// <summary>
     /// Ajouter le nouveau contenu sur la zone de texte du keypad
@@ -37,12 +41,15 @@ public class keypad : MonoBehaviour
     {
         if(displayCode == validCode)
         {
+            reference.OpenDirectely();
             Close();
+            tr.Play();
         }
         else
         {
             displayCode = "";
             displayText.text = "";
+            fl.Play();
         }
     }
 }
